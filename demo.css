@@ -1,0 +1,38 @@
+body, html{
+margin:0;
+width:100%;
+}
+
+#container{
+    margin:auto;
+    width:800px;
+    background:#aaa;
+    padding:20px;
+}
+
+.box{
+    width:700px;
+    border:1px solid black;
+    background:#ccc;
+    margin:20px auto;
+    padding:20px;
+}
+
+h1{
+    font-size:20px;
+    margin-top: auto;
+}
+
+.box h2{
+    font-size:18px;
+}
+
+.box .board{
+    width:520px;
+    height:520px;
+    margin:auto;
+    border:1px solid black;
+    /* background:url(https://d29fhpw069ctt2.cloudfront.net/icon/image/39127/preview.png) #fff; */
+    background:url(grid.png) #fff;
+    /* border-radius:10px; */
+}

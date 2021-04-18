@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Svg.draw.js : Demo-Page">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="demo.css">
+
+    <title>Draw Cytoscape Node Body</title>
+
+</head>
+
+<body>
+    <div id="container">
+        <h1>Draw a Custom Cytoscape Node Body polygon shape</h1>
+
+
+        <div class="box">
+            <h2>Things to know:</h2>
+            <ul>
+                <li>Press enter to close the shape (Don't stress, it won't draw the last positon of your cursor)</li>
+                <li>While pressing CTRL Snap to grid</li>
+                <li>CTRL+Z to undo</li>
+                <li>The whole canvas becomes the node body, if you don't want a teeny weeny icon, use as much space as
+                    you can</li>
+                <li>On Cytoscape using a nice border for the node body can make the icon nicer ;)</li>
+            </ul>
+            <div class="board" id="polygonGridOnCtrl"></div>
+            <div id="result">Array</div>
+        </div>
+
+    </div>
+
+    <script src="svg.min.js"></script>
+    <script src="svg.draw.min.js"></script>
+    <script>
+        var poly3 = new SVG('polygonGridOnCtrl').size('520px', '520px').polygon().draw().attr('stroke-width', 1).attr('fill', 'none');
+
+        poly3.on('drawstart', function (e) {
+            document.addEventListener('keydown', function (event) {
+                if (event.ctrlKey && event.key === 'z') {
+                    poly3.array().value.pop()
+                }
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.keyCode == 13) {
+                    poly3.draw('done');
+                    poly3.off('drawstart');
+                    poly3.fill('#f06')
+                    let svgArr = poly3.array().value
+                    let res = document.getElementById("result")
+                    console.log(svgArr)
+                    let arr = []
+                    Array.from(svgArr).map((el) => { arr.push((el[0] - 260) / 260); arr.push((el[1] - 260) / 260); })
+                    console.log(arr)
+                    res.innerText = arr.join(" ")
+
+                }
+                if (e.keyCode == 17) {
+                    poly3.draw('param', 'snapToGrid', 20);
+                }
+            });
+
+            document.addEventListener('keyup', function (e) {
+                poly3.draw('param', 'snapToGrid', 1);
+            });
+        });
+
+
+        function transformArray(arr) {
+
+        }
+
+    </script>
+</body>
+
+</html>
