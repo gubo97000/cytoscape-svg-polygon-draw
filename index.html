@@ -23,12 +23,14 @@
                 <li>Press enter to close the shape (Don't stress, it won't draw the last positon of your cursor)</li>
                 <li>While pressing CTRL Snap to grid</li>
                 <li>CTRL+Z to undo</li>
-                <li>The whole canvas becomes the node body, if you don't want a teeny weeny icon, use as much space as
-                    you can</li>
+                <li>The whole canvas becomes the node body, if you don't want a teeny weeny icon, use the maximize
+                    button</li>
                 <li>On Cytoscape using a nice border for the node body can make the icon nicer ;)</li>
+                <li>Very scrappy, much janky</li>
             </ul>
+            <span><button id="maximize">Maximize</button></span>
             <div class="board" id="polygonGridOnCtrl"></div>
-            <div id="result">Array</div>
+            <div id="result">Paste this code insiede "shape-polygon-points" property in Cytoscape</div>
         </div>
 
     </div>
@@ -49,15 +51,8 @@
                 if (e.keyCode == 13) {
                     poly3.draw('done');
                     poly3.off('drawstart');
-                    poly3.fill('#f06')
-                    let svgArr = poly3.array().value
-                    let res = document.getElementById("result")
-                    console.log(svgArr)
-                    let arr = []
-                    Array.from(svgArr).map((el) => { arr.push((el[0] - 260) / 260); arr.push((el[1] - 260) / 260); })
-                    console.log(arr)
-                    res.innerText = arr.join(" ")
-
+                    poly3.fill('#f06');
+                    showCytoArray()
                 }
                 if (e.keyCode == 17) {
                     poly3.draw('param', 'snapToGrid', 20);
@@ -69,9 +64,24 @@
             });
         });
 
+        document.addEventListener("click", (e) => {
+            console.log(e.target)
+            if (e.target.id == "maximize") {
+                poly3.size(520, 520)
+                poly3.move(0, 0)
+                showCytoArray()
+            }
+        })
 
-        function transformArray(arr) {
 
+        function showCytoArray() {
+            let svgArr = poly3.array().value
+            let res = document.getElementById("result")
+            let arr = []
+            Array.from(svgArr).map((el) => { arr.push((el[0] - 260) / 260); arr.push((el[1] - 260) / 260); })
+            console.log(svgArr)
+            console.log(arr)
+            res.innerText = arr.join(" ")
         }
 
     </script>

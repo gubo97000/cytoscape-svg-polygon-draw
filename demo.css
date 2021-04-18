@@ -34,5 +34,12 @@ h1{
     border:1px solid black;
     /* background:url(https://d29fhpw069ctt2.cloudfront.net/icon/image/39127/preview.png) #fff; */
     background:url(grid.png) #fff;
-    /* border-radius:10px; */
+    
+}
+#result{
+    margin:20px auto 20px auto;
+    padding: 10px;
+    background-color: white;
+    border:1px solid black;
+    border-radius:10px;
 }
