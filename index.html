@@ -30,7 +30,7 @@
             </ul>
             <span><button id="maximize">Maximize</button></span>
             <div class="board" id="polygonGridOnCtrl"></div>
-            <div id="result">Paste this code insiede "shape-polygon-points" property in Cytoscape</div>
+            <div id="result">Paste the sequence that will appear inside "shape-polygon-points" property in Cytoscape</div>
         </div>
 
     </div>
@@ -67,7 +67,17 @@
         document.addEventListener("click", (e) => {
             console.log(e.target)
             if (e.target.id == "maximize") {
-                poly3.size(520, 520)
+                let arr = Array.from(poly3.array().value)
+                let [arr1, arr2] = [[], []]
+                arr.map((e) => { arr1.push(e[0]); arr2.push(e[1]) })
+                // console.log(arr1,arr2)
+                if (
+                    Math.min(...arr1) - Math.max(...arr1) < Math.min(...arr2) - Math.max(...arr2)) {
+                    poly3.size(520)
+                } else {
+                    poly3.size(null, 520)
+                }
+
                 poly3.move(0, 0)
                 showCytoArray()
             }
@@ -79,9 +89,15 @@
             let res = document.getElementById("result")
             let arr = []
             Array.from(svgArr).map((el) => { arr.push((el[0] - 260) / 260); arr.push((el[1] - 260) / 260); })
+            arr = arr.map((el) => {
+                if (el > 1 || el < -1) {
+                    return `<span class='error'>${el}</span>`
+                }
+                else { return el }
+            })
             console.log(svgArr)
             console.log(arr)
-            res.innerText = arr.join(" ")
+            res.innerHTML = arr.join(" ")
         }
 
     </script>
